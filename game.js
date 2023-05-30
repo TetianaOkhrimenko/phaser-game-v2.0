@@ -309,12 +309,15 @@ class GameScene extends Phaser.Scene {
       this.audioFlying.play({ volume: 3 });
       this.physics.world.removeCollider(this.colider);
 
+      ///???? How to count platform when cat is flying up. Code below doesn't work
       this.platforms.getChildren().forEach(function (platform, index) {
         if (m.player.y === platform.y) {
           m.score += 1;
           m.scoreText.setText("SCORE: " + m.score);
         }
       });
+
+      //
 
       // this.physics.world.colliders.destroy(this.collider);
 
