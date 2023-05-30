@@ -37,7 +37,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.audio("audio_jump", [
       "audio/Dafunk - Hardcore Power (We Believe In Goa - Remix).mp3",
     ]);
-    this.load.audio("audio_flying", ["audio/flying.mp3"]);
+    this.load.audio("audio_flying", ["audio/flying2.mp3"]);
     this.load.audio("audio_falling", ["audio/falling.wav"]);
     this.load.audio("audio_jumping", ["audio/jumping.wav"]);
   }
@@ -209,7 +209,8 @@ export default class GameScene extends Phaser.Scene {
     this.messageText = this.add.text(
       this.w / 2,
       this.h / 2,
-      "PRESS UP TO FLY",
+      // "PRESS UP TO FLY",
+      "CAT-HELICOPTER MODE",
       {
         fontFamily: "Oswald",
         fontSize: "42px",
@@ -286,6 +287,8 @@ export default class GameScene extends Phaser.Scene {
       //apple.destroy();
       apple.disableBody(true, true);
       this.isPlayerFly = true;
+      this.audioFlying.play({ volume: 2 });
+      this.messageText.visible = true;
     });
 
     //this.physics.add.collider(player, platforms, (player, platform) => {
@@ -300,13 +303,14 @@ export default class GameScene extends Phaser.Scene {
     this.physics.world.wrap(this.player, 32);
 
     if (this.isPlayerFly) {
-      this.messageText.visible = true;
+      //this.messageText.visible = true;
     }
 
-    if (this.cursors.up.isDown && this.isPlayerFly) {
+    //    if (this.cursors.up.isDown && this.isPlayerFly)
+    if (this.isPlayerFly) {
       this.player.setVelocityY(-400);
       //this.audioJump.stop();
-      this.audioFlying.play({ volume: 3 });
+      //this.audioFlying.play({ volume: 3 });
       this.physics.world.removeCollider(this.colider);
 
       ///???? How to count platform when cat is flying up. Code below doesn't work
@@ -468,7 +472,7 @@ export default class GameScene extends Phaser.Scene {
       }
     }
 
-    /*this.apples.getChildren().forEach(function (apple, index) {
+    /* this.apples.getChildren().forEach(function (apple, index) {
       this.platformYMin = Math.min(this.platformYMin, apple.y);
       if (apple.y > this.cameras.y + this.h + 300) {
         apple.y = this.platformYMin - 100;
