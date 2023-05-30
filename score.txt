@@ -1,0 +1,7 @@
+   this.platforms.getChildren().forEach(function (platform, index) {
+        if (m.lastPlatformPosition !== platform.y) {
+          m.score += 1;
+          m.scoreText.setText("SCORE: " + m.score);
+          m.lastPlatformPosition = platform.y;
+        }
+      });
