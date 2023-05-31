@@ -41,6 +41,7 @@ export default class GameScene extends Phaser.Scene {
     this.load.audio("audio_flying", ["audio/flying2.mp3"]);
     this.load.audio("audio_falling", ["audio/falling.wav"]);
     this.load.audio("audio_jumping", ["audio/jumping.wav"]);
+    this.load.audio("audio_apple", ["audio/apple.wav"]);
   }
 
   create() {
@@ -57,6 +58,7 @@ export default class GameScene extends Phaser.Scene {
     this.audioFlying = this.sound.add("audio_flying");
     this.audioFalling = this.sound.add("audio_falling");
     this.audioJumping = this.sound.add("audio_jumping");
+    this.audioOverlayApple = this.sound.add("audio_apple");
 
     /* const musicConfig = {
       mute: false,
@@ -211,7 +213,7 @@ export default class GameScene extends Phaser.Scene {
       this.w / 2,
       this.h / 2,
       // "PRESS UP TO FLY",
-      "CAT-HELICOPTER MODE",
+      "CAT-HELICOPTER MODE 🚁",
       {
         fontFamily: "Oswald",
         fontSize: "42px",
@@ -232,9 +234,10 @@ export default class GameScene extends Phaser.Scene {
 
     this.gameOverText = this.add.text(this.w / 2, this.h / 2, "GAME OVER", {
       fontFamily: "Oswald",
-      fontSize: "42px",
+      fontSize: "52px",
       fill: "#fe4e6e", //#000,
     });
+
     this.gameOverText.setOrigin(0.5);
     this.gameOverText.visible = false;
     this.messageText.setOrigin(0.5);
@@ -314,6 +317,7 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.platforms, this.movingPlatforms);
 
     this.physics.add.overlap(this.player, this.apples, (player, apple) => {
+      this.audioOverlayApple.play();
       //apple.destroy();
       apple.disableBody(true, true);
       this.isPlayerFly = true;
