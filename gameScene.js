@@ -18,6 +18,7 @@ export default class GameScene extends Phaser.Scene {
   context = this;
   gameOver = false;
   colider;
+  winText;
 
   constructor() {
     super("Game");
@@ -112,7 +113,7 @@ export default class GameScene extends Phaser.Scene {
       );
     }
 
-    for (let i = 1; i < 9; i++) {
+    for (let i = 1; i < 14; i++) {
       this.platforms.create(
         Phaser.Math.RND.between(100, this.w - 100),
         this.cameraYMin - 90 * i
@@ -137,7 +138,7 @@ export default class GameScene extends Phaser.Scene {
       platform.body.moves = false;
       platform.body.velocity.x = 100;
 
-      if (index % 7 === 0 && index !== 0) {
+      if (index % 12 === 0 && index !== 0) {
         this.apples.create(platform.x, platform.y - 40);
       }
     }, this);
@@ -218,6 +219,17 @@ export default class GameScene extends Phaser.Scene {
       }
     );
 
+    this.winText = this.add.text(
+      this.w / 2,
+      this.h / 2,
+      "YOU'VE ACHIEVED YOUR GOAL!!!💥",
+      {
+        fontFamily: "Oswald",
+        fontSize: "36px",
+        fill: "#fe4e6e",
+      }
+    );
+
     this.gameOverText = this.add.text(this.w / 2, this.h / 2, "GAME OVER", {
       fontFamily: "Oswald",
       fontSize: "42px",
@@ -227,12 +239,15 @@ export default class GameScene extends Phaser.Scene {
     this.gameOverText.visible = false;
     this.messageText.setOrigin(0.5);
     this.messageText.visible = false;
+    this.winText.setOrigin(0.5);
+    this.winText.visible = false;
 
     this.hud = this.add.container(0, 0, [
       this.scoreText,
       this.gameOverText,
       this.goalText,
       this.messageText,
+      this.winText,
     ]);
     //lock it to the camera
     this.hud.setScrollFactor(0);
@@ -258,14 +273,29 @@ export default class GameScene extends Phaser.Scene {
           me.lastPlatformPosition = platform.y;
 
           if (this.score === this.goalQuantity) {
+            this.isPlayerFly = true;
+            for (const apple of this.apples.getChildren()) {
+              apple.disableBody(true, true);
+            }
+            for (const platform of this.platforms.getChildren()) {
+              platform.disableBody(true, true);
+            }
+            for (const platform of this.movingPlatforms.getChildren()) {
+              platform.disableBody(true, true);
+            }
+            this.winText.visible = true;
             this.score = 0;
-            this.scene.start("WinScene");
+
+            setTimeout(() => {
+              this.scene.start("WinScene");
+            }, 4000);
+            //this.scene.start("WinScene");
           }
         }
       }
     );
 
-    this.physics.add.collider(
+    this.movCollider = this.physics.add.collider(
       this.player,
       this.movingPlatforms,
       (player, platform) => {
@@ -312,6 +342,7 @@ export default class GameScene extends Phaser.Scene {
       //this.audioJump.stop();
       //this.audioFlying.play({ volume: 3 });
       this.physics.world.removeCollider(this.colider);
+      this.physics.world.removeCollider(this.movCollider);
 
       ///???? How to count platform when cat is flying up. Code below doesn't work
       this.platforms.getChildren().forEach(function (platform, index) {
@@ -333,6 +364,7 @@ export default class GameScene extends Phaser.Scene {
         this.messageText.visible = false;
         this.audioFlying.stop();
         this.physics.world.colliders.add(this.colider);
+        this.physics.world.colliders.add(this.movCollider);
       }, 6000);
 
       /*this.time.delayedCall(
@@ -420,8 +452,9 @@ export default class GameScene extends Phaser.Scene {
         [],
         this
       );*/
+    } else if (this.player.y > this.worldHeight) {
+      this.scene.start("EndGameScene");
     }
-
     //this.physics.add.collider(player, platforms, touchPlatform, null, this);
 
     this.movingPlatforms.getChildren().forEach(function (platform) {
@@ -452,7 +485,7 @@ export default class GameScene extends Phaser.Scene {
         //platform.destroy();
         platform.y = this.platformYMin - 100;
 
-        if (index % 7 === 0 && index !== 0) {
+        if (index % 12 === 0 && index !== 0) {
           this.apples.create(platform.x, platform.y - 40);
         }
 
@@ -466,9 +499,19 @@ export default class GameScene extends Phaser.Scene {
     for (const apple of this.apples.getChildren()) {
       apple.body.immovable = true;
       apple.body.moves = false;
+      console.log("Apple.y:", apple.y);
 
       if (apple.y > this.cameras.y + this.h + 300) {
         apple.destroy();
+      } else if (apple.y < this.player.y && apple.y > this.cameras.y) {
+        setTimeout(function () {
+          apple.setTintFill(0xfe4e6e);
+          apple.setAlpha(0.5);
+        }, 5000);
+
+        setTimeout(function () {
+          apple.destroy();
+        }, 10000);
       }
     }
 
