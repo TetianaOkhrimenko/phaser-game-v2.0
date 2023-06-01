@@ -24,15 +24,16 @@ export default class WinScene extends Phaser.Scene {
     this.add.image(this.w / 2, this.h / 2, "backgroundWin");
 
     this.add
-      .text(this.w / 2, this.h / 2 - 100, "WINNER!", {
-        fontFamily: "Oswald",
-        fontSize: "50px",
-        fill: "#fe4e6e", //#000,
+      .text(this.w / 2, this.h / 2 - 50, "WINNER!", {
+        fontFamily: "Arial Black",
+        fontSize: 70,
+        color: "#eee", //#000,
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setStroke("#fe4e6e", 16);
 
     this.add
-      .text(this.w / 2, this.h / 2, "CLICK TO START AGAIN", {
+      .text(this.w / 2, this.h / 2 + 50, "CLICK TO START AGAIN", {
         fontFamily: "Oswald",
         fontSize: "36px",
         fill: "#eee", //#000,
