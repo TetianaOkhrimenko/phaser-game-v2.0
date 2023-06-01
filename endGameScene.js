@@ -3,6 +3,8 @@ export default class EndGameScene extends Phaser.Scene {
     super("EndGameScene");
   }
 
+  movingGround;
+
   preload() {
     this.load.image("backgroundEnd", "assets/dream_clouds4.png");
     this.load.image("ground", "assets/platform4.png");
@@ -19,6 +21,19 @@ export default class EndGameScene extends Phaser.Scene {
 
     this.audioGameOver = this.sound.add("audio_end");
     this.audioGameOver.play();
+
+    this.movingGround = this.physics.add
+      .image(400, 500, "ground")
+      .setScale(1.2)
+      .refreshBody();
+
+    this.movingGround.setImmovable(true);
+    this.movingGround.body.allowGravity = false;
+    this.movingGround.setVelocityX(50);
+
+    const catTom = this.physics.add.sprite(400, 400, "cat");
+
+    this.physics.add.collider(catTom, this.movingGround);
 
     this.add
       .text(this.w / 2, this.h / 2 - 50, "GAME OVER", {
@@ -42,5 +57,11 @@ export default class EndGameScene extends Phaser.Scene {
     });
   }
 
-  update() {}
+  update() {
+    if (this.movingGround.x >= 600) {
+      this.movingGround.setVelocityX(-50);
+    } else if (this.movingGround.x <= 200) {
+      this.movingGround.setVelocityX(50);
+    }
+  }
 }

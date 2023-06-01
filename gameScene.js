@@ -146,9 +146,12 @@ export default class GameScene extends Phaser.Scene {
     }, this);
 
     for (const platform of this.movingPlatforms.getChildren()) {
-      platform.body.immovable = true;
+      //platform.body.immovable = true;
 
-      platform.setVelocity(100, 0);
+      platform.setImmovable(true);
+      platform.setVelocityX(100);
+
+      // platform.setVelocity(100, 0);
       platform.body.allowGravity = false;
       platform.setFriction(0, 1);
 
@@ -192,22 +195,25 @@ export default class GameScene extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.scoreText = this.add.text(this.w / 2 + 250, 20, "SCORE: 0", {
-      fontFamily: "Oswald",
-      fontSize: "28px",
-      fill: "#fe4e6e", //#000, //#eee
+    this.scoreText = this.add.text(this.w / 2 + 220, 20, "SCORE: 0", {
+      fontFamily: "Arial Black",
+      fontSize: 24,
+      color: "#eee", //#000, //#eee
     });
+    this.scoreText.setStroke("#fe4e6e", 6);
 
     this.goalText = this.add.text(
       this.w / 2 + 50,
       20,
       `GOAL: ${this.goalQuantity}`,
       {
-        fontFamily: "Oswald",
-        fontSize: "28px",
-        fill: "#fe4e6e", //#000,
+        fontFamily: "Arial Black",
+        fontSize: 24,
+        color: "#eee", //#000,
       }
     );
+
+    this.goalText.setStroke("#fe4e6e", 6);
 
     this.messageText = this.add.text(
       this.w / 2,
@@ -215,11 +221,12 @@ export default class GameScene extends Phaser.Scene {
       // "PRESS UP TO FLY",
       "CAT-HELICOPTER MODE 🚁",
       {
-        fontFamily: "Oswald",
-        fontSize: "42px",
-        fill: "#fe4e6e", //#000,
+        fontFamily: "Arial Black",
+        fontSize: 40,
+        color: "#eee", //#000,
       }
     );
+    this.messageText.setStroke("#fe4e6e", 10);
 
     this.winText = this.add.text(
       this.w / 2,
@@ -300,6 +307,11 @@ export default class GameScene extends Phaser.Scene {
 
     this.movCollider = this.physics.add.collider(
       this.player,
+      this.movingPlatforms
+    );
+
+    /* this.movCollider = this.physics.add.collider(
+      this.player,
       this.movingPlatforms,
       (player, platform) => {
         this.isPlyaerColidePlatform = true;
@@ -310,7 +322,7 @@ export default class GameScene extends Phaser.Scene {
           //player.body.immovable = true;
         }
       }
-    );
+    );*/
 
     this.physics.add.collider(this.player, this.block);
 
@@ -347,6 +359,10 @@ export default class GameScene extends Phaser.Scene {
       //this.audioFlying.play({ volume: 3 });
       this.physics.world.removeCollider(this.colider);
       this.physics.world.removeCollider(this.movCollider);
+
+      for (const apple of this.apples.getChildren()) {
+        apple.disableBody(true, true);
+      }
 
       ///???? How to count platform when cat is flying up. Code below doesn't work
       this.platforms.getChildren().forEach(function (platform, index) {
