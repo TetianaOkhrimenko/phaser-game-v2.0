@@ -88,10 +88,6 @@ export default class EndGameScene extends Phaser.Scene {
       if (index % 3 === 0) {
         this.moveApple(apple, 2);
       }
-
-      if (index % 5 === 0) {
-        this.moveApple(apple, 1);
-      }
     });
   }
 }

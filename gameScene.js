@@ -436,16 +436,15 @@ export default class GameScene extends Phaser.Scene {
 
     if (this.player.y > this.cameraYMin + this.h + this.h / 2) {
       this.gameOverText.visible = true;
-      this.gameOver = true;
-
+      // this.gameOver = true;
       //this.cameras.main.shake(500);
     }
 
-    if (this.gameOver) {
-      //this.audioFlying.stop();
-      //this.audioJump.stop();
-      //this.audioFalling.play(this.musicConfig);
-    }
+    // if (this.gameOver) {
+    //this.audioFlying.stop();
+    //this.audioJump.stop();
+    //this.audioFalling.play(this.musicConfig);
+    // }
 
     //if (player.y > this.cameraYMin + this.h && player.alive) {
 

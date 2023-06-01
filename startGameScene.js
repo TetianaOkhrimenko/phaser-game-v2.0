@@ -3,6 +3,8 @@ export default class StartGameScene extends Phaser.Scene {
     super("StartGameScene");
   }
 
+  apples;
+
   preload() {
     this.load.audio("audio_start", ["audio/start.mp3"]);
     this.load.image("backgroundStart", "assets/background.png");
@@ -45,21 +47,37 @@ export default class StartGameScene extends Phaser.Scene {
     this.physics.add.collider(playerCat, earth);
 
     //const apple = this.physics.add.image(150, 200, "apple");
-    const apples = this.physics.add.group({
+    this.apples = this.physics.add.group({
       defaultKey: "apple",
     });
 
-    apples.create(150, 100);
-    apples.create(350, 250);
-    apples.create(500, 450);
-    apples.create(600, 143);
-    apples.create(150, 500);
-    apples.create(750, 300);
+    this.apples.create(150, 100);
+    this.apples.create(350, 250);
+    this.apples.create(500, 450);
+    this.apples.create(600, 143);
+    this.apples.create(150, 500);
+    this.apples.create(750, 300);
 
-    for (const apple of apples.getChildren()) {
+    for (const apple of this.apples.getChildren()) {
       apple.body.allowGravity = false;
       apple.body.immovable = true;
       apple.body.moves = false;
+    }
+
+    for (const apple of this.apples.getChildren()) {
+      //apple.angle += 2;
+      const applesTween = this.tweens.add({
+        targets: apple,
+        angle: { from: 60, to: -60 },
+        duration: 500,
+        yoyo: true,
+        repeat: -1,
+      });
+      setTimeout(() => {
+        applesTween.stop();
+        //applesTween.updateTo("repeat", 2, true);
+        // applesTween.restart();
+      }, 7000);
     }
 
     this.add
