@@ -45,7 +45,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    let me = this;
+    // let me = this;
 
     this.w = this.cameras.main.width;
     this.h = this.cameras.main.height;
@@ -276,11 +276,11 @@ export default class GameScene extends Phaser.Scene {
         if (
           player.body.touching.down &&
           platform.body.touching.up &&
-          me.lastPlatformPosition !== platform.y
+          this.lastPlatformPosition !== platform.y
         ) {
           this.score += 1;
           this.scoreText.setText("SCORE: " + this.score);
-          me.lastPlatformPosition = platform.y;
+          this.lastPlatformPosition = platform.y;
 
           if (this.score === this.goalQuantity) {
             this.isPlayerFly = true;
@@ -344,7 +344,7 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-    let m = this;
+    // let m = this;
 
     this.physics.world.wrap(this.player, 32);
 
@@ -365,10 +365,10 @@ export default class GameScene extends Phaser.Scene {
       }
 
       ///???? How to count platform when cat is flying up. Code below doesn't work
-      this.platforms.getChildren().forEach(function (platform, index) {
-        if (m.player.y === platform.y) {
-          m.score += 1;
-          m.scoreText.setText("SCORE: " + m.score);
+      this.platforms.getChildren().forEach((platform, index) => {
+        if (this.player.y === platform.y) {
+          this.score += 1;
+          this.scoreText.setText("SCORE: " + this.score);
         }
       });
 
@@ -450,7 +450,10 @@ export default class GameScene extends Phaser.Scene {
     //if (player.y > this.cameraYMin + this.h && player.alive) {
 
     // if (player.y > this.cameraYMin + this.h + 300) {
-    if (
+
+    if (this.player.y > this.worldHeight) {
+      this.scene.start("EndGameScene");
+    } else if (
       this.player.y > this.cameraYMin + 2 * this.h ||
       (this.gameOverText.visible && this.player.body.touching.down)
     ) {
@@ -472,9 +475,8 @@ export default class GameScene extends Phaser.Scene {
         [],
         this
       );*/
-    } else if (this.player.y > this.worldHeight) {
-      this.scene.start("EndGameScene");
     }
+
     //this.physics.add.collider(player, platforms, touchPlatform, null, this);
 
     this.movingPlatforms.getChildren().forEach(function (platform) {

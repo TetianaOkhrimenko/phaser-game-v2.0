@@ -5,12 +5,17 @@ export default class EndGameScene extends Phaser.Scene {
 
   movingGround;
 
+  moveApple(apple, speed) {
+    apple.y += speed;
+  }
+
   preload() {
     this.load.image("backgroundEnd", "assets/dream_clouds4.png");
     this.load.image("ground", "assets/platform4.png");
     this.load.image("cat", "assets/orange-cat1.png");
     this.load.image("apple", "assets/apple.png");
     this.load.audio("audio_end", ["audio/game-over-arcade-6435.mp3"]);
+    //this.load.audio("audio_end", ["audio/gameover.mp3"]);
   }
 
   create() {
@@ -20,7 +25,18 @@ export default class EndGameScene extends Phaser.Scene {
     this.add.image(this.w / 2, this.h / 2, "backgroundEnd");
 
     this.audioGameOver = this.sound.add("audio_end");
-    this.audioGameOver.play();
+    this.audioGameOver.play({ volume: 3 });
+
+    this.applesEnd = this.physics.add.group({
+      defaultKey: "apple",
+    });
+
+    for (let i = 1; i < 6; i++) {
+      this.applesEnd.create(
+        this.w - 100 * i,
+        Phaser.Math.RND.between(0, this.h)
+      );
+    }
 
     this.movingGround = this.physics.add
       .image(400, 500, "ground")
@@ -63,5 +79,19 @@ export default class EndGameScene extends Phaser.Scene {
     } else if (this.movingGround.x <= 200) {
       this.movingGround.setVelocityX(50);
     }
+
+    this.applesEnd.getChildren().forEach((apple, index) => {
+      if (index % 2 === 0) {
+        this.moveApple(apple, 1);
+      }
+
+      if (index % 3 === 0) {
+        this.moveApple(apple, 2);
+      }
+
+      if (index % 5 === 0) {
+        this.moveApple(apple, 1);
+      }
+    });
   }
 }

@@ -4,22 +4,23 @@ export default class StartGameScene extends Phaser.Scene {
   }
 
   preload() {
+    this.load.audio("audio_start", ["audio/start.mp3"]);
     this.load.image("backgroundStart", "assets/background.png");
     //this.load.image("earth", "assets/platform4.png");
     this.load.image("ground", "assets/platform4.png");
     this.load.image("cat", "assets/orange-cat1.png");
     this.load.image("apple", "assets/apple.png");
-    this.load.audio("audio_start", ["audio/start.mp3"]);
   }
 
   create() {
     this.w = this.cameras.main.width;
     this.h = this.cameras.main.height;
+    this.audioStart = this.sound.add("audio_start");
+
+    this.audioStart.play();
+    // this.sound.pauseOnBlur = true;
 
     this.add.image(this.w / 2, this.h / 2, "backgroundStart");
-
-    this.audioStart = this.sound.add("audio_start");
-    this.audioStart.play();
 
     const earth = this.physics.add
       .image(400, 200, "ground")
@@ -79,6 +80,7 @@ export default class StartGameScene extends Phaser.Scene {
       .setOrigin(0.5, 0.5);
 
     this.input.on("pointerdown", (pointer) => {
+      // this.audioStart.stop();
       this.scene.start("Game");
     });
   }
