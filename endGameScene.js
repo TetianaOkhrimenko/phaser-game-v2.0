@@ -21,15 +21,16 @@ export default class EndGameScene extends Phaser.Scene {
     this.audioGameOver.play();
 
     this.add
-      .text(this.w / 2, this.h / 2 - 100, "GAME OVER", {
-        fontFamily: "Oswald",
-        fontSize: "50px",
-        fill: "#eee", //#000,
+      .text(this.w / 2, this.h / 2 - 50, "GAME OVER", {
+        fontFamily: "Arial Black",
+        fontSize: 70,
+        color: "#eee", //#000,
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setStroke("#fe4e6e", 16);
 
     this.add
-      .text(this.w / 2, this.h / 2, "CLICK TO START AGAIN", {
+      .text(this.w / 2, this.h / 2 + 50, "CLICK TO START AGAIN", {
         fontFamily: "Oswald",
         fontSize: "36px",
         fill: "#eee", //#000,

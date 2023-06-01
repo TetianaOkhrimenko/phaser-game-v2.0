@@ -48,10 +48,10 @@ export default class StartGameScene extends Phaser.Scene {
       defaultKey: "apple",
     });
 
-    apples.create(150, 200);
+    apples.create(150, 100);
     apples.create(350, 250);
     apples.create(500, 450);
-    apples.create(600, 150);
+    apples.create(600, 143);
     apples.create(150, 500);
     apples.create(750, 300);
 
@@ -63,16 +63,17 @@ export default class StartGameScene extends Phaser.Scene {
 
     this.add
       .text(this.w / 2, this.h / 2 - 100, "CAT JUMP GAME", {
-        fontFamily: "Oswald",
-        fontSize: "42px",
-        fill: "#347474", //#eee,
+        fontFamily: "Arial Black",
+        fontSize: 64,
+        color: "#eee", // "#347474", //#eee,
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setStroke("#347474", 16);
 
     this.add
       .text(this.w / 2, this.h / 2, "CLICK TO START", {
         fontFamily: "Oswald",
-        fontSize: "42px",
+        fontSize: "40px",
         fill: "#347474", //#eee, //#000
       })
       .setOrigin(0.5, 0.5);

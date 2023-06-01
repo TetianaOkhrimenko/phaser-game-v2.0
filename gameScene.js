@@ -8,7 +8,7 @@ export default class GameScene extends Phaser.Scene {
   scoreText;
   lastPlatformPosition;
   goalText;
-  goalQuantity = 20;
+  goalQuantity = 30;
   gameOverText;
   messageText;
   hud;
