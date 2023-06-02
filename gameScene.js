@@ -8,7 +8,7 @@ export default class GameScene extends Phaser.Scene {
   scoreText;
   lastPlatformPosition;
   goalText;
-  goalQuantity = 30;
+  goalQuantity = 10;
   gameOverText;
   messageText;
   hud;
@@ -150,8 +150,6 @@ export default class GameScene extends Phaser.Scene {
 
       platform.setImmovable(true);
       platform.setVelocityX(100);
-
-      // platform.setVelocity(100, 0);
       platform.body.allowGravity = false;
       platform.setFriction(0, 1);
 
@@ -507,12 +505,21 @@ export default class GameScene extends Phaser.Scene {
         platform.y = this.platformYMin - 100;
 
         if (index % 12 === 0 && index !== 0) {
+          this.apples.create(platform.x, platform.y - 40);
+          this.apples.getChildren().forEach(function (apple, index) {
+            this.appleYMin = Math.min(this.appleYMin, apple.y);
+            if (apple.y > this.cameras.y + this.h) {
+              apple.y = this.appleYMin - 100;
+              console.log("apple.y:", apple.y);
+            }
+          }, this);
+
           // this.apples.getChildren().forEach(function (apple, index) {
           //   apple.y = platform.y - 40;
           //   apple.x = platform.x;
           //});
 
-          this.apples.create(platform.x, platform.y - 40);
+          // this.apples.create(platform.x, platform.y - 40);
         }
 
         /* this.apples.getChildren().forEach(function (apple, index) {

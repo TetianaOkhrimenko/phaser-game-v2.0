@@ -62,10 +62,7 @@ export default class StartGameScene extends Phaser.Scene {
       apple.body.allowGravity = false;
       apple.body.immovable = true;
       apple.body.moves = false;
-    }
 
-    for (const apple of this.apples.getChildren()) {
-      //apple.angle += 2;
       const applesTween = this.tweens.add({
         targets: apple,
         angle: { from: 60, to: -60 },
