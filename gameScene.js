@@ -8,7 +8,7 @@ export default class GameScene extends Phaser.Scene {
   scoreText;
   lastPlatformPosition;
   goalText;
-  goalQuantity = 40;
+  goalQuantity = 20;
   gameOverText;
   messageText;
   hud;
@@ -19,6 +19,7 @@ export default class GameScene extends Phaser.Scene {
   gameOver = false;
   colider;
   winText;
+  helicopterPlatformArray = [];
 
   constructor() {
     super("Game");
@@ -229,13 +230,15 @@ export default class GameScene extends Phaser.Scene {
     this.winText = this.add.text(
       this.w / 2,
       this.h / 2,
-      "YOU'VE ACHIEVED YOUR GOAL!!!💥",
+      "GOAL IS ACHIEVED!!!💥",
       {
-        fontFamily: "Oswald",
-        fontSize: "36px",
-        fill: "#fe4e6e",
+        fontFamily: "Arial Black",
+        fontSize: 40,
+        color: "#eee",
       }
     );
+
+    this.winText.setStroke("#fe4e6e", 10);
 
     this.gameOverText = this.add.text(this.w / 2, this.h / 2, "GAME OVER", {
       fontFamily: "Oswald",
@@ -280,6 +283,11 @@ export default class GameScene extends Phaser.Scene {
           this.scoreText.setText("SCORE: " + this.score);
           this.lastPlatformPosition = platform.y;
 
+          // Try to remove the platform which flied by cat from array
+          // this.helicopterPlatformArray = this.helicopterPlatformArray.filter(
+          //   (helicopterPlatform) => helicopterPlatform === platform
+          // );
+
           if (this.score === this.goalQuantity) {
             this.isPlayerFly = true;
             for (const apple of this.apples.getChildren()) {
@@ -295,6 +303,7 @@ export default class GameScene extends Phaser.Scene {
             this.score = 0;
 
             setTimeout(() => {
+              this.score = 0;
               this.scene.start("WinScene");
             }, 4000);
             //this.scene.start("WinScene");
@@ -363,14 +372,21 @@ export default class GameScene extends Phaser.Scene {
       }
 
       ///???? How to count platform when cat is flying up. Code below doesn't work
-      /*this.platforms.getChildren().forEach((platform, index) => {
-        console.log("PLATFORM.Y:", platform.y);
-        console.log("PLAYER.Y:", this.player.y);
-        if (this.player.y === platform.y) {
-          this.score += 1;
-          this.scoreText.setText("SCORE: " + this.score);
-        }
-      });*/
+      // this.platforms.getChildren().forEach((platform, index) => {
+      // console.log("PLATFORM.Y:", platform.y);
+      // console.log("PLAYER.Y:", this.player.y);
+      // if (this.player.y === platform.y) {
+      //  console.log(platform);
+      //  console.log(this.player.y);
+      // if (
+      //    this.player.y >= platform.y &&
+      //    !this.helicopterPlatformArray.includes(platform)
+      //  ) {
+      //    this.score += 1;
+      //    this.scoreText.setText("SCORE: " + this.score);
+      //    this.helicopterPlatformArray.push(platform);
+      //  }
+      // });
 
       //
 
@@ -463,6 +479,7 @@ export default class GameScene extends Phaser.Scene {
     // if (player.y > this.cameraYMin + this.h + 300) {
 
     if (this.player.y > this.worldHeight) {
+      this.score = 0;
       this.scene.start("EndGameScene");
     } else if (
       this.player.y > this.cameraYMin + 2 * this.h ||
@@ -472,9 +489,9 @@ export default class GameScene extends Phaser.Scene {
       //this.cameras.main.fade(250);
       // this.cameras.main.shake(500);
       this.score = 0;
-      setTimeout(() => {
-        this.scene.start("EndGameScene");
-      }, 2000);
+      //setTimeout(() => {
+      this.scene.start("EndGameScene");
+      // }, 2000);
 
       /*this.time.delayedCall(
         1000,
