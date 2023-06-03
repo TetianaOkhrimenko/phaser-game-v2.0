@@ -8,7 +8,7 @@ export default class GameScene extends Phaser.Scene {
   scoreText;
   lastPlatformPosition;
   goalText;
-  goalQuantity = 10;
+  goalQuantity = 40;
   gameOverText;
   messageText;
   hud;
@@ -363,12 +363,14 @@ export default class GameScene extends Phaser.Scene {
       }
 
       ///???? How to count platform when cat is flying up. Code below doesn't work
-      this.platforms.getChildren().forEach((platform, index) => {
+      /*this.platforms.getChildren().forEach((platform, index) => {
+        console.log("PLATFORM.Y:", platform.y);
+        console.log("PLAYER.Y:", this.player.y);
         if (this.player.y === platform.y) {
           this.score += 1;
           this.scoreText.setText("SCORE: " + this.score);
         }
-      });
+      });*/
 
       //
 
@@ -399,6 +401,18 @@ export default class GameScene extends Phaser.Scene {
         this
       );*/
     }
+
+    /* this.platforms.getChildren().forEach((platform, index) => {
+      if (
+        this.isPlayerFly &&
+        platform.y < this.player.y &&
+        this.lastPlatformPosition !== platform.y
+      ) {
+        this.score += 1;
+        this.scoreText.setText("SCORE: " + this.score);
+        this.lastPlatformPosition = platform.y;
+      }
+    });*/
 
     // if (this.physics.collider(this.player, this.platforms)) {
     //  touchPlatform();
