@@ -19,6 +19,7 @@ export default class GameScene extends Phaser.Scene {
   gameOver = false;
   colider;
   winText;
+  helicopterPlatformArray = [];
 
   constructor() {
     super("Game");
@@ -279,6 +280,10 @@ export default class GameScene extends Phaser.Scene {
           this.score += 1;
           this.scoreText.setText("SCORE: " + this.score);
           this.lastPlatformPosition = platform.y;
+          // Try to remove the platform which flied by cat from array
+          this.helicopterPlatformArray = this.helicopterPlatformArray.filter(
+            (helicopterPlatform) => helicopterPlatform === platform
+          );
 
           if (this.score === this.goalQuantity) {
             this.isPlayerFly = true;
@@ -362,11 +367,18 @@ export default class GameScene extends Phaser.Scene {
         apple.disableBody(true, true);
       }
 
+      console.log("getChildren", this.platforms.getChildren());
       ///???? How to count platform when cat is flying up. Code below doesn't work
       this.platforms.getChildren().forEach((platform, index) => {
-        if (this.player.y === platform.y) {
+        console.log(platform);
+        console.log(this.player.y);
+        if (
+          this.player.y >= platform.y &&
+          !this.helicopterPlatformArray.includes(platform)
+        ) {
           this.score += 1;
           this.scoreText.setText("SCORE: " + this.score);
+          this.helicopterPlatformArray.push(platform);
         }
       });
 
