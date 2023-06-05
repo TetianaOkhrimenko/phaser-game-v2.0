@@ -27,6 +27,28 @@ export default class EndGameScene extends Phaser.Scene {
     this.audioGameOver = this.sound.add("audio_end");
     this.audioGameOver.play({ volume: 3 });
 
+    this.textMessage = this.add
+      .text(this.w / 2, this.h / 2 + 50, "CLICK TO START AGAIN", {
+        fontFamily: "Oswald",
+        fontSize: "36px",
+        fill: "#eee", //#000,
+      })
+      .setOrigin(0.5, 0.5);
+    this.textMessage.visible = false;
+
+    setTimeout(() => {
+      this.textMessage.visible = true;
+    }, 500);
+
+    this.add
+      .text(this.w / 2, this.h / 2 - 50, "GAME OVER", {
+        fontFamily: "Arial Black",
+        fontSize: 70,
+        color: "#eee", //#000,
+      })
+      .setOrigin(0.5, 0.5)
+      .setStroke("#fe4e6e", 16);
+
     this.applesEnd = this.physics.add.group({
       defaultKey: "apple",
     });
@@ -50,23 +72,6 @@ export default class EndGameScene extends Phaser.Scene {
     const catTom = this.physics.add.sprite(400, 400, "cat");
 
     this.physics.add.collider(catTom, this.movingGround);
-
-    this.add
-      .text(this.w / 2, this.h / 2 - 50, "GAME OVER", {
-        fontFamily: "Arial Black",
-        fontSize: 70,
-        color: "#eee", //#000,
-      })
-      .setOrigin(0.5, 0.5)
-      .setStroke("#fe4e6e", 16);
-
-    this.add
-      .text(this.w / 2, this.h / 2 + 50, "CLICK TO START AGAIN", {
-        fontFamily: "Oswald",
-        fontSize: "36px",
-        fill: "#eee", //#000,
-      })
-      .setOrigin(0.5, 0.5);
 
     this.input.on("pointerdown", (pointer) => {
       this.scene.start("Game");

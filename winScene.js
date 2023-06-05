@@ -23,6 +23,19 @@ export default class WinScene extends Phaser.Scene {
 
     this.add.image(this.w / 2, this.h / 2, "backgroundWin");
 
+    this.textMsg = this.add
+      .text(this.w / 2, this.h / 2 + 50, "CLICK TO START AGAIN", {
+        fontFamily: "Oswald",
+        fontSize: "36px",
+        fill: "#eee", //#000,
+      })
+      .setOrigin(0.5, 0.5);
+    this.textMsg.visible = false;
+
+    setTimeout(() => {
+      this.textMsg.visible = true;
+    }, 500);
+
     this.add
       .text(this.w / 2, this.h / 2 - 50, "WINNER!", {
         fontFamily: "Arial Black",
@@ -31,14 +44,6 @@ export default class WinScene extends Phaser.Scene {
       })
       .setOrigin(0.5, 0.5)
       .setStroke("#fe4e6e", 16);
-
-    this.add
-      .text(this.w / 2, this.h / 2 + 50, "CLICK TO START AGAIN", {
-        fontFamily: "Oswald",
-        fontSize: "36px",
-        fill: "#eee", //#000,
-      })
-      .setOrigin(0.5, 0.5);
 
     //const apple = this.physics.add.image(150, 200, "apple");
     //apple.body.allowGravity = false;
