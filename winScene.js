@@ -25,7 +25,7 @@ export default class WinScene extends Phaser.Scene {
 
     this.textMsg = this.add
       .text(this.w / 2, this.h / 2 + 50, "CLICK TO START AGAIN", {
-        fontFamily: "Oswald",
+        fontFamily: "Arial Black",
         fontSize: "36px",
         fill: "#eee", //#000,
       })
@@ -38,9 +38,10 @@ export default class WinScene extends Phaser.Scene {
 
     this.add
       .text(this.w / 2, this.h / 2 - 50, "WINNER!", {
-        fontFamily: "Arial Black",
+        fontFamily: "Luckiest Guy",
         fontSize: 70,
         color: "#eee", //#000,
+        shadow: { offsetX: 1, offsetY: 3, stroke: true, fill: true, blur: 0 },
       })
       .setOrigin(0.5, 0.5)
       .setStroke("#fe4e6e", 16);

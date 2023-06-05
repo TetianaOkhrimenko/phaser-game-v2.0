@@ -52,7 +52,7 @@ export default class StartGameScene extends Phaser.Scene {
     });
 
     this.apples.create(150, 100);
-    this.apples.create(350, 250);
+    this.apples.create(350, 265);
     this.apples.create(500, 450);
     this.apples.create(600, 143);
     this.apples.create(150, 500);
@@ -79,18 +79,23 @@ export default class StartGameScene extends Phaser.Scene {
 
     this.add
       .text(this.w / 2, this.h / 2 - 100, "CAT JUMP GAME", {
-        fontFamily: "Arial Black",
+        fontFamily: "Luckiest Guy", //"Arial Black",
         fontSize: 64,
-        color: "#eee", // "#347474", //#eee,
+        color: "#eee",
+        fontStyle: "normal",
+        shadow: { offsetX: 1, offsetY: 2, stroke: true, fill: true },
+        // "#347474", //#eee,
       })
       .setOrigin(0.5, 0.5)
       .setStroke("#347474", 16);
 
     this.add
       .text(this.w / 2, this.h / 2, "CLICK TO START", {
-        fontFamily: "Oswald",
-        fontSize: "40px",
-        fill: "#347474", //#eee, //#000
+        fontFamily: "Luckiest Guy",
+        fontSize: 38,
+        fill: "#347474",
+
+        //#eee, //#000
       })
       .setOrigin(0.5, 0.5);
 

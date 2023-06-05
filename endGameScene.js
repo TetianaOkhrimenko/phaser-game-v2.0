@@ -29,7 +29,7 @@ export default class EndGameScene extends Phaser.Scene {
 
     this.textMessage = this.add
       .text(this.w / 2, this.h / 2 + 50, "CLICK TO START AGAIN", {
-        fontFamily: "Oswald",
+        fontFamily: "Arial Black",
         fontSize: "36px",
         fill: "#eee", //#000,
       })
@@ -38,11 +38,11 @@ export default class EndGameScene extends Phaser.Scene {
 
     setTimeout(() => {
       this.textMessage.visible = true;
-    }, 500);
+    }, 400);
 
     this.add
       .text(this.w / 2, this.h / 2 - 50, "GAME OVER", {
-        fontFamily: "Arial Black",
+        fontFamily: "Luckiest Guy",
         fontSize: 70,
         color: "#eee", //#000,
       })
@@ -53,7 +53,7 @@ export default class EndGameScene extends Phaser.Scene {
       defaultKey: "apple",
     });
 
-    for (let i = 1; i < 6; i++) {
+    for (let i = 1; i < 8; i++) {
       this.applesEnd.create(
         this.w - 100 * i,
         Phaser.Math.RND.between(0, this.h)
@@ -87,7 +87,7 @@ export default class EndGameScene extends Phaser.Scene {
 
     this.applesEnd.getChildren().forEach((apple, index) => {
       if (index % 2 === 0) {
-        this.moveApple(apple, 1);
+        this.moveApple(apple, 0.5);
       }
 
       if (index % 3 === 0) {
