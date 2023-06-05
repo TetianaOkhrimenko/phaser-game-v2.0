@@ -16,7 +16,6 @@ export default class EndGameScene extends Phaser.Scene {
     this.load.image("apple", "assets/apple.png");
     this.load.audio("audio_end", ["audio/game-over-arcade-6435.mp3"]);
     this.load.audio("audio_endGame", ["audio/end.wav"]);
-    //this.load.audio("audio_end", ["audio/gameover.mp3"]);
   }
 
   create() {
@@ -45,7 +44,7 @@ export default class EndGameScene extends Phaser.Scene {
     this.add
       .text(this.w / 2, this.h / 2 - 50, "GAME OVER", {
         fontFamily: "Luckiest Guy",
-        fontSize: 70,
+        fontSize: 72,
         color: "#eee", //#000,
       })
       .setOrigin(0.5, 0.5)

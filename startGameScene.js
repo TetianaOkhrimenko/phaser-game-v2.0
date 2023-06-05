@@ -8,7 +8,6 @@ export default class StartGameScene extends Phaser.Scene {
   preload() {
     this.load.audio("audio_start", ["audio/start.mp3"]);
     this.load.image("backgroundStart", "assets/background.png");
-    //this.load.image("earth", "assets/platform4.png");
     this.load.image("ground", "assets/platform4.png");
     this.load.image("cat", "assets/orange-cat1.png");
     this.load.image("apple", "assets/apple.png");
@@ -20,7 +19,6 @@ export default class StartGameScene extends Phaser.Scene {
     this.audioStart = this.sound.add("audio_start");
 
     this.audioStart.play();
-    // this.sound.pauseOnBlur = true;
 
     this.add.image(this.w / 2, this.h / 2, "backgroundStart");
 
@@ -46,7 +44,6 @@ export default class StartGameScene extends Phaser.Scene {
 
     this.physics.add.collider(playerCat, earth);
 
-    //const apple = this.physics.add.image(150, 200, "apple");
     this.apples = this.physics.add.group({
       defaultKey: "apple",
     });
@@ -72,14 +69,12 @@ export default class StartGameScene extends Phaser.Scene {
       });
       setTimeout(() => {
         applesTween.stop();
-        //applesTween.updateTo("repeat", 2, true);
-        // applesTween.restart();
       }, 7000);
     }
 
     this.add
       .text(this.w / 2, this.h / 2 - 100, "CAT JUMP GAME", {
-        fontFamily: "Luckiest Guy", //"Arial Black",
+        fontFamily: "Luckiest Guy",
         fontSize: 64,
         color: "#eee",
         fontStyle: "normal",
@@ -100,7 +95,6 @@ export default class StartGameScene extends Phaser.Scene {
       .setOrigin(0.5, 0.5);
 
     this.input.on("pointerdown", (pointer) => {
-      // this.audioStart.stop();
       this.scene.start("Game");
     });
   }

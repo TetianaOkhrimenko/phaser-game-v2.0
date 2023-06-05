@@ -27,7 +27,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   winGame() {
-    //if (this.score === this.goalQuantity) {
     for (const apple of this.apples.getChildren()) {
       apple.disableBody(true, true);
     }
@@ -39,15 +38,6 @@ export default class GameScene extends Phaser.Scene {
     }
     this.winText.visible = true;
     this.audioAchievedGoal.play();
-
-    //this.score = 0;
-
-    // setTimeout(() => {
-    //this.score = 0;
-    //this.scene.start("WinScene");
-    // }, 4000);
-    //this.scene.start("WinScene");
-    //}
   }
 
   preload() {
@@ -58,8 +48,6 @@ export default class GameScene extends Phaser.Scene {
     this.load.image("platform", "assets/platform5.png");
     this.load.image("cat", "assets/orange-cat1.png");
     this.load.image("apple", "assets/apple.png");
-    //this.load.audio("ding", ["audio/music.mp3"]);
-    //this.load.audio("flying", ["audio/flying.mp3"]);
 
     this.load.audio("audio_jump", [
       "audio/Dafunk - Hardcore Power (We Believe In Goa - Remix).mp3",
@@ -73,8 +61,6 @@ export default class GameScene extends Phaser.Scene {
   }
 
   create() {
-    // let me = this;
-
     this.w = this.cameras.main.width;
     this.h = this.cameras.main.height;
 
@@ -89,20 +75,6 @@ export default class GameScene extends Phaser.Scene {
     this.audioOverlayApple = this.sound.add("audio_apple");
     this.audioAchievedGoal = this.sound.add("audio_goal");
     this.audioEndGame = this.sound.add("audio_endGame");
-
-    /* const musicConfig = {
-      mute: false,
-      volume: 1,
-      rate: 1,
-      detune: 0,
-      seek: 0,
-      loop: false,
-      delay: 0,
-    };*/
-
-    //this.audioJump.play(musicConfig);
-
-    //this.music.play(musicConfig);
 
     const container = this.add.container(this.w, this.worldHeight);
     const ts = this.add.tileSprite(
@@ -176,8 +148,6 @@ export default class GameScene extends Phaser.Scene {
     }, this);
 
     for (const platform of this.movingPlatforms.getChildren()) {
-      //platform.body.immovable = true;
-
       platform.setImmovable(true);
       platform.setVelocityX(100);
       platform.body.allowGravity = false;
@@ -186,15 +156,6 @@ export default class GameScene extends Phaser.Scene {
       platform.maxDistance = 200;
       platform.previousX = platform.x;
       platform.setOrigin(0.5, 0.5);
-
-      /*this.tweens.add({
-           targets: platform,
-           x: 400,
-           duration: 2000,
-           ease: "Sine.easeInOut",
-           repeat: -1,
-           yoyo: true,
-         });*/
     }
 
     for (const apple of this.apples.getChildren()) {
@@ -246,7 +207,6 @@ export default class GameScene extends Phaser.Scene {
     this.messageText = this.add.text(
       this.w / 2,
       this.h / 2,
-      // "PRESS UP TO FLY",
       "CAT-HELICOPTER MODE 🚁",
       {
         fontFamily: "Arial Black",
@@ -289,10 +249,8 @@ export default class GameScene extends Phaser.Scene {
       this.messageText,
       this.winText,
     ]);
-    //lock it to the camera
-    this.hud.setScrollFactor(0);
 
-    //scoreText.fixedToCamera = true;
+    this.hud.setScrollFactor(0);
 
     this.colider = this.physics.add.collider(
       this.player,
@@ -306,21 +264,6 @@ export default class GameScene extends Phaser.Scene {
           this.score += 1;
           this.scoreText.setText("SCORE: " + this.score);
           this.lastPlatformPosition = platform.y;
-
-          // this.helicopterPlatformArray.push(platform.y);
-          // Try to remove the platform which flied by cat from array
-          //this.helicopterPlatformArray = this.helicopterPlatformArray.filter(
-          //  (helicopterPlatform) => helicopterPlatform === platform
-          //);
-
-          /*if (this.score === this.goalQuantity) {
-            this.isPlayerFly = true;
-            this.winGame();
-            setTimeout(() => {
-              this.score = 0;
-              this.scene.start("WinScene");
-            }, 4000);
-          }*/
         }
       }
     );
@@ -336,7 +279,6 @@ export default class GameScene extends Phaser.Scene {
 
     this.physics.add.overlap(this.player, this.apples, (player, apple) => {
       this.audioOverlayApple.play();
-      //apple.destroy();
       apple.disableBody(true, true);
       this.isPlayerFly = true;
       this.audioFlying.play({ volume: 2 });
@@ -355,19 +297,10 @@ export default class GameScene extends Phaser.Scene {
   }
 
   update() {
-    // let m = this;
-
     this.physics.world.wrap(this.player, 32);
 
     if (this.isPlayerFly) {
-      //this.messageText.visible = true;
-    }
-
-    //    if (this.cursors.up.isDown && this.isPlayerFly)
-    if (this.isPlayerFly) {
       this.player.setVelocityY(-400);
-      //this.audioJump.stop();
-      //this.audioFlying.play({ volume: 3 });
       this.physics.world.removeCollider(this.colider);
       this.physics.world.removeCollider(this.movCollider);
 
@@ -383,27 +316,6 @@ export default class GameScene extends Phaser.Scene {
         this.physics.world.colliders.add(this.movCollider);
         if (this.timer) this.timer.remove();
       }, 6000);
-
-      /*if (this.score === this.goalQuantity) {
-        this.messageText.visible = false;
-        this.audioFlying.stop();
-        //this.gameOverText.visible = false;
-        //this.player.setVelocityY(-400);
-        if (this.timer) this.timer.remove();
-        //clearTimeout(this.flyingTime);
-        if (!this.isPlayerFly) this.isPlayerFly = true;
-        this.winGame();
-        this.score = 0;
-        this.time.delayedCall(
-          2000,
-          function () {
-            this.scene.start("WinScene");
-          },
-          [],
-          this
-        );
-        //this.scene.start("WinScene");
-      }*/
     }
 
     const cam = this.cameras.main;
@@ -437,14 +349,7 @@ export default class GameScene extends Phaser.Scene {
     if (this.player.y > this.cameraYMin + this.h + this.h / 2) {
       this.gameOverText.visible = true;
       this.gameOver = true;
-      //this.cameras.main.shake(500);
     }
-
-    // if (this.gameOver) {
-    //this.audioFlying.stop();
-    //this.audioJump.stop();
-    //this.audioFalling.play(this.musicConfig);
-    //}
 
     if (this.player.y > this.worldHeight) {
       this.score = 0;
@@ -453,11 +358,7 @@ export default class GameScene extends Phaser.Scene {
       this.player.y > this.cameraYMin + 2 * this.h ||
       (this.gameOverText.visible && this.player.body.touching.down)
     ) {
-      //physics.pause();
-      //this.cameras.main.fade(250);
-      // this.cameras.main.shake(500);
       this.score = 0;
-      //setTimeout(() => {
       this.time.delayedCall(
         2500,
         function () {
@@ -477,9 +378,7 @@ export default class GameScene extends Phaser.Scene {
     }, this);
 
     this.clouds.getChildren().forEach(function (cloud) {
-      //this.platformYMin = Math.min(this.platformYMin, platform.y);
       if (cloud.y > this.cameras.y + this.h + 300) {
-        //platform.destroy();
         cloud.y = this.platformYMin - 100;
       }
     }, this);
@@ -487,7 +386,6 @@ export default class GameScene extends Phaser.Scene {
     this.platforms.getChildren().forEach(function (platform, index) {
       this.platformYMin = Math.min(this.platformYMin, platform.y);
       if (platform.y > this.cameras.y + this.h + 300) {
-        //platform.destroy();
         platform.y = this.platformYMin - 100;
 
         if (index % 12 === 0 && index !== 0) {
@@ -522,9 +420,7 @@ export default class GameScene extends Phaser.Scene {
     }
 
     this.movingPlatforms.getChildren().forEach(function (platform) {
-      //this.platformYMin = Math.min(this.platformYMin, platform.y);
       if (platform.y > this.cameras.y + this.h + 300) {
-        //platform.destroy();
         platform.y = this.platformYMin - 100;
       }
     }, this);

@@ -46,11 +46,6 @@ export default class WinScene extends Phaser.Scene {
       .setOrigin(0.5, 0.5)
       .setStroke("#fe4e6e", 16);
 
-    //const apple = this.physics.add.image(150, 200, "apple");
-    //apple.body.allowGravity = false;
-    //apple.body.immovable = true;
-    //apple.body.moves = false;
-
     const config1 = {
       key: "explode1",
       frames: "boom",
