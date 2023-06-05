@@ -34,7 +34,7 @@ export default class WinScene extends Phaser.Scene {
 
     setTimeout(() => {
       this.textMsg.visible = true;
-    }, 500);
+    }, 400);
 
     this.add
       .text(this.w / 2, this.h / 2 - 50, "WINNER!", {

@@ -459,7 +459,7 @@ export default class GameScene extends Phaser.Scene {
       this.score = 0;
       //setTimeout(() => {
       this.time.delayedCall(
-        3000,
+        2500,
         function () {
           this.scene.start("EndGameScene");
         },

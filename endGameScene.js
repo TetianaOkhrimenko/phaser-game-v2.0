@@ -15,6 +15,7 @@ export default class EndGameScene extends Phaser.Scene {
     this.load.image("cat", "assets/orange-cat1.png");
     this.load.image("apple", "assets/apple.png");
     this.load.audio("audio_end", ["audio/game-over-arcade-6435.mp3"]);
+    this.load.audio("audio_endGame", ["audio/end.wav"]);
     //this.load.audio("audio_end", ["audio/gameover.mp3"]);
   }
 
@@ -25,6 +26,7 @@ export default class EndGameScene extends Phaser.Scene {
     this.add.image(this.w / 2, this.h / 2, "backgroundEnd");
 
     this.audioGameOver = this.sound.add("audio_end");
+    this.audioEndGame = this.sound.add("audio_endGame");
     this.audioGameOver.play({ volume: 3 });
 
     this.textMessage = this.add
@@ -60,6 +62,12 @@ export default class EndGameScene extends Phaser.Scene {
       );
     }
 
+    this.staticApple = this.physics.add.staticImage(
+      this.w / 2 + 220,
+      this.h / 2 - 50,
+      "apple"
+    );
+
     this.movingGround = this.physics.add
       .image(400, 500, "ground")
       .setScale(1.2)
@@ -87,11 +95,11 @@ export default class EndGameScene extends Phaser.Scene {
 
     this.applesEnd.getChildren().forEach((apple, index) => {
       if (index % 2 === 0) {
-        this.moveApple(apple, 0.5);
+        this.moveApple(apple, 0.3);
       }
 
       if (index % 3 === 0) {
-        this.moveApple(apple, 2);
+        this.moveApple(apple, 0.5);
       }
     });
   }
