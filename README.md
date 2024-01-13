@@ -1,6 +1,6 @@
 ### Cat Jump Game
 
-<img scr='./assets/orange-cat1.png'>
+![orange-cat1](https://github.com/TetianaOkhrimenko/phaser-game-v2.0/assets/114341912/de1e4d07-59d9-478b-82a8-681ac51b1e2d)
 
 This game is a fun and engaging project that showcases skills in JavaScript, OOP, and the Phaser framework.
 
@@ -10,4 +10,4 @@ The game features a dynamic loading system for platforms, a counter for the maxi
 
 And sometimes a cat can find apple which increase a speed of a cat. This game has several scenes such as: Start Game, Game, Win Game, Game Over.
 
-Tech: JavaScript, Phaser
+Tech: JavaScript, Phaser, OOP
